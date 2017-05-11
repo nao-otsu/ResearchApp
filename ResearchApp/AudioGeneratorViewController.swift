@@ -11,10 +11,8 @@ import AVFoundation
 
 class AudioGeneratorViewController: UIViewController{
     
-    // エンジンの生成
-    var audioEngine: AVAudioEngine!
-    // ソースノードの生成
-    var player: AVAudioPlayerNode!
+    var sineWave1: SineWaveClass!
+    var sineWave2: SineWaveClass!
     
     @IBOutlet weak var frequencySlider: UISlider!
     @IBOutlet weak var frequencyLabel: UILabel!
@@ -22,8 +20,9 @@ class AudioGeneratorViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //ラベルの初期設定
         frequencyLabel.text = String(frequencySlider.value)
-        //self.view.addSubview(frequencyLabel)
         // Do any additional setup after loading the view.
     }
 
@@ -33,61 +32,48 @@ class AudioGeneratorViewController: UIViewController{
     }
     //スライダーから値を取得
     @IBAction func SliderGetValue(_ sender: Any) {
+        //ラベルの値更新
         frequencyLabel.text = String(frequencySlider.value)
-    }
-
-    func playSineWave() {
         
-        audioEngine = AVAudioEngine()
-        player = AVAudioPlayerNode()
-        // プレイヤーノードからオーディオフォーマットを取得
-        let audioFormat = player.outputFormat(forBus: 0)
-        // サンプリング周波数: 44.1K Hz
-        let sampleRate = Float(audioFormat.sampleRate)
-        // フレームの長さ
-        let length = 10 * sampleRate
-        print("フレームの長さ:\(length)")
-        // PCMバッファーを生成
-        let buffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity:UInt32(length))
-        // frameLength を設定することで mDataByteSize が更新される
-        buffer.frameLength = UInt32(length)
-        // オーディオのチャンネル数
-        let channels = Int(audioFormat.channelCount)
-        print("チャンネル数:\(channels)")
-        for ch in (0..<channels) {
-            let samples = buffer.floatChannelData?[ch]
-            for n in 0..<Int(buffer.frameLength) {
-                samples?[n] = sinf(Float(2.0 * M_PI) * frequencySlider.value * Float(n) / sampleRate)
+        if let _ = sineWave1 {
+            //再生中の時
+            if sineWave1.playerNode.isPlaying || sineWave2.playerNode.isPlaying {
+                checkSineWave()
             }
         }
         
-        // オーディオエンジンにプレイヤーをアタッチ
-        audioEngine.attach(player)
-        let mixer = audioEngine.mainMixerNode
-        // プレイヤーノードとミキサーノードを接続
-        audioEngine.connect(player, to: mixer, format: audioFormat)
-        // 再生の開始を設定
-        /*player.scheduleBuffer(buffer) {
-            print("Play completed")
-        }*/
-        
-        do {
-            // エンジンを開始
-            try audioEngine.start()
-            // 再生
-            player.play()
-            player.scheduleBuffer(buffer, at: nil, options: .loops, completionHandler: nil)
-        } catch let error {
-            print(error)
-        }
     }
+
     @IBAction func PlayButton(_ sender: UIButton) {
         if sender.titleLabel?.text == "Play" {
-            playSineWave()
+            //sineWaveのインスタンス化 1つ目
+            sineWave1 = SineWaveClass(frequencyValue: frequencySlider.value)
             playButton.setTitle("Stop", for: .normal)
+            if let sineWave = sineWave1{
+                sineWave.playSineWave()
+            }
         }else{
-            player.stop()
             playButton.setTitle("Play", for: .normal)
+            if sineWave1.playerNode.isPlaying{
+                sineWave1.stopSineWave()
+            } else {
+                sineWave2.stopSineWave()
+            }
+        }
+    }
+    
+
+    func checkSineWave(){
+        if sineWave1.playerNode.isPlaying {
+            sineWave2 = SineWaveClass(frequencyValue: frequencySlider.value)
+            sineWave1.stopSineWave()
+            sineWave2.playSineWave()
+            
+        }else if sineWave2.playerNode.isPlaying{
+            sineWave1 = SineWaveClass(frequencyValue: frequencySlider.value)
+            sineWave2.stopSineWave()
+            sineWave1.playSineWave()
+            
         }
     }
 }

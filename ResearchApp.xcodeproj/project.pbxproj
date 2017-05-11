@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5FCC59C8288D793041444536 /* Pods_ResearchApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C7AFDFB3426CF19A93BE26C /* Pods_ResearchApp.framework */; };
 		74103A661EA5E66A003DE060 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74103A651EA5E66A003DE060 /* AppDelegate.swift */; };
 		74103A681EA5E66A003DE060 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74103A671EA5E66A003DE060 /* ViewController.swift */; };
 		74103A6B1EA5E66A003DE060 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74103A691EA5E66A003DE060 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 		74A641831EA9355D00ED3120 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 74A641821EA9355D00ED3120 /* Default-568h@2x.png */; };
 		74A641971EB1E7C000ED3120 /* AudioGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A641961EB1E7C000ED3120 /* AudioGeneratorViewController.swift */; };
 		74B192EA1EA7C7C000883458 /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B192E91EA7C7C000883458 /* AudioViewController.swift */; };
+		74ECF1CB1EC41EF400D0C6FB /* SineWaveClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ECF1CA1EC41EF400D0C6FB /* SineWaveClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,10 @@
 		74A641821EA9355D00ED3120 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		74A641961EB1E7C000ED3120 /* AudioGeneratorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioGeneratorViewController.swift; sourceTree = "<group>"; };
 		74B192E91EA7C7C000883458 /* AudioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioViewController.swift; sourceTree = "<group>"; };
+		74ECF1CA1EC41EF400D0C6FB /* SineWaveClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SineWaveClass.swift; sourceTree = "<group>"; };
+		9C7AFDFB3426CF19A93BE26C /* Pods_ResearchApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ResearchApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0CA045B6B0D92656A28C2A6 /* Pods-ResearchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResearchApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ResearchApp/Pods-ResearchApp.debug.xcconfig"; sourceTree = "<group>"; };
+		BF3B85F6717C497B3AE4A32D /* Pods-ResearchApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResearchApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ResearchApp/Pods-ResearchApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FCC59C8288D793041444536 /* Pods_ResearchApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +54,8 @@
 				74A641821EA9355D00ED3120 /* Default-568h@2x.png */,
 				74103A641EA5E66A003DE060 /* ResearchApp */,
 				74103A631EA5E66A003DE060 /* Products */,
+				BCFFEA7482594CD541A99261 /* Pods */,
+				B7F4E48AE11C5C189CBEF093 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -69,8 +78,26 @@
 				74103A711EA5E66A003DE060 /* Info.plist */,
 				74B192E91EA7C7C000883458 /* AudioViewController.swift */,
 				74A641961EB1E7C000ED3120 /* AudioGeneratorViewController.swift */,
+				74ECF1CA1EC41EF400D0C6FB /* SineWaveClass.swift */,
 			);
 			path = ResearchApp;
+			sourceTree = "<group>";
+		};
+		B7F4E48AE11C5C189CBEF093 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C7AFDFB3426CF19A93BE26C /* Pods_ResearchApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BCFFEA7482594CD541A99261 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B0CA045B6B0D92656A28C2A6 /* Pods-ResearchApp.debug.xcconfig */,
+				BF3B85F6717C497B3AE4A32D /* Pods-ResearchApp.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,9 +107,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 74103A741EA5E66A003DE060 /* Build configuration list for PBXNativeTarget "ResearchApp" */;
 			buildPhases = (
+				21B0F3DBD06E787FD468B5AE /* [CP] Check Pods Manifest.lock */,
 				74103A5E1EA5E66A003DE060 /* Sources */,
 				74103A5F1EA5E66A003DE060 /* Frameworks */,
 				74103A601EA5E66A003DE060 /* Resources */,
+				28B5974C2E21F83E467CCCF3 /* [CP] Embed Pods Frameworks */,
+				A82BF699EC39BBEED73C0FB0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -142,6 +172,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		21B0F3DBD06E787FD468B5AE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		28B5974C2E21F83E467CCCF3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ResearchApp/Pods-ResearchApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A82BF699EC39BBEED73C0FB0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ResearchApp/Pods-ResearchApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		74103A5E1EA5E66A003DE060 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -149,6 +227,7 @@
 			files = (
 				74103A681EA5E66A003DE060 /* ViewController.swift in Sources */,
 				74A641971EB1E7C000ED3120 /* AudioGeneratorViewController.swift in Sources */,
+				74ECF1CB1EC41EF400D0C6FB /* SineWaveClass.swift in Sources */,
 				74103A661EA5E66A003DE060 /* AppDelegate.swift in Sources */,
 				74B192EA1EA7C7C000883458 /* AudioViewController.swift in Sources */,
 			);
@@ -261,6 +340,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
@@ -269,11 +349,13 @@
 		};
 		74103A751EA5E66A003DE060 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B0CA045B6B0D92656A28C2A6 /* Pods-ResearchApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YN38HTBC6B;
 				INFOPLIST_FILE = ResearchApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kagoshima-u.ResearchApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -282,11 +364,13 @@
 		};
 		74103A761EA5E66A003DE060 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF3B85F6717C497B3AE4A32D /* Pods-ResearchApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YN38HTBC6B;
 				INFOPLIST_FILE = ResearchApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kagoshima-u.ResearchApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
