@@ -12,51 +12,66 @@ import AVFoundation
 class SineWaveClass{
     var audioEngine: AVAudioEngine!
     var playerNode: AVAudioPlayerNode!
-    var pcmBuffer: AVAudioPCMBuffer!
     var mixerNode: AVAudioMixerNode!
-    
+    var pcmBuffer: AVAudioPCMBuffer!
+    var audioFormat: AVAudioFormat!
+
     //周波数
-    var frequency: Float
+    var frequency: Float = 0.0
     
-    init(frequencyValue: Float){
+    init(){
         audioEngine = AVAudioEngine()
         playerNode = AVAudioPlayerNode()
-        let audioFormat = playerNode.outputFormat(forBus: 0)
-        let sampleRate = Float(audioFormat.sampleRate)
+        audioFormat = playerNode.outputFormat(forBus: 0)
+        let sampleRate = audioFormat.sampleRate
         let length = sampleRate
-        pcmBuffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: UInt32(length))
+        pcmBuffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: UInt32(sampleRate))
         pcmBuffer.frameLength = UInt32(length)
-        mixerNode = audioEngine.mainMixerNode
-        let channels = Int(mixerNode.outputFormat(forBus: 0).channelCount)
-        frequency = frequencyValue
-        //Sin波生成
-        for ch in (0..<channels){
-            let samples = pcmBuffer.floatChannelData?[ch]
-            for n in 0..<Int(pcmBuffer.frameLength){
-                samples?[n] = sinf(Float(2.0 * M_PI) * frequency * Float(n) / sampleRate)
-            }
-        }
-        
-        //オーディオエンジンにプレイヤーノードをアタッチ
         audioEngine.attach(playerNode)
-        //プレイヤーノードとミキサーノードを接続
+        mixerNode = audioEngine.mainMixerNode
         audioEngine.connect(playerNode, to: mixerNode, format: audioFormat)
-        
-        }
-    
-    func playSineWave(){
-        do {
+        do{
             try audioEngine.start()
-            playerNode.play()
-            playerNode.scheduleBuffer(pcmBuffer, at: nil, options: .loops, completionHandler: nil)
-            
-        }catch let error {
+        }catch let error{
             print(error)
         }
     }
     
-    func stopSineWave(){
-        playerNode.stop()
+    /*func prepareBuffer() -> AVAudioPCMBuffer{
+        let buffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: bufferCapacity)
+        fillBuffer(buffer: buffer)
+        return buffer
+    }*/
+    
+    func prepareBuffer() -> AVAudioPCMBuffer{
+        
+        //print(channels)
+        
+        //Sin波生成
+        for ch in (0..<Int(mixerNode.outputFormat(forBus: 0).channelCount)){
+            let samples = pcmBuffer.floatChannelData?[ch]
+            for n in 0..<Int(pcmBuffer.frameLength){
+                samples?[n] = sinf(Float(2.0 * M_PI) * frequency * Float(n) / Float(audioFormat.sampleRate))
+            }
+        }
+        
+        return pcmBuffer
     }
     
+    func scheduleBuffer() {
+        let buffer = prepareBuffer()
+        playerNode.scheduleBuffer(buffer, at: nil, options: .interruptsAtLoop, completionHandler: {
+            if self.playerNode.isPlaying {
+                self.scheduleBuffer()
+            }
+        })
+    }
+    
+    func preparePlaying() {
+        scheduleBuffer()
+        scheduleBuffer()
+        scheduleBuffer()
+        scheduleBuffer()
+    }
 }
+
