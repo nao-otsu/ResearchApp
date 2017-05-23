@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="8R9-di-sdn">
-                                <rect key="frame" x="131" y="238" width="112" height="190"/>
+                                <rect key="frame" x="131" y="198" width="112" height="270"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i6x-40-pVq">
                                         <rect key="frame" x="0.0" y="0.0" width="112" height="30"/>
@@ -43,6 +43,13 @@
                                         <state key="normal" title="Audio Generator"/>
                                         <connections>
                                             <segue destination="4hc-mu-TSK" kind="show" id="byi-oY-VRj"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ASG-Fn-Ipp">
+                                        <rect key="frame" x="0.0" y="240" width="112" height="30"/>
+                                        <state key="normal" title="FFT"/>
+                                        <connections>
+                                            <segue destination="1Cg-hP-DUu" kind="show" id="UFG-42-1hI"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -215,7 +222,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EPN-3z-3gG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="270" y="802"/>
+            <point key="canvasLocation" x="-511" y="816"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="M7U-Nu-Ate">
+            <objects>
+                <viewController id="1Cg-hP-DUu" customClass="FFTViewController" customModule="ResearchApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gFB-pJ-qu8"/>
+                        <viewControllerLayoutGuide type="bottom" id="Oqo-Sn-7Kt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ajA-Dr-LNd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Khc-Q7-pbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="270" y="815"/>
         </scene>
     </scenes>
 </document>

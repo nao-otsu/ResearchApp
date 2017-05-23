@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class AudioGeneratorViewController: UIViewController{
+class AudioGeneratorViewController: UIViewController,EZMicrophoneDelegate,EZAudioFFTDelegate{
     
     var sineWave: SineWaveClass!
     
@@ -22,6 +22,7 @@ class AudioGeneratorViewController: UIViewController{
         frequencyLabel.text = String(frequencySlider.value)
         sineWave = SineWaveClass()
         sineWave.frequency = frequencySlider.value
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,6 +44,7 @@ class AudioGeneratorViewController: UIViewController{
             playButton.setTitle("Stop", for: .normal)
             sineWave.preparePlaying()
             sineWave.playerNode.play()
+            //sineWave.preparePlaying()
         }else if sender.titleLabel?.text == "Stop"{
             playButton.setTitle("Play", for: .normal)
             if sineWave.playerNode.isPlaying{
@@ -50,4 +52,7 @@ class AudioGeneratorViewController: UIViewController{
             }
         }
     }
+    
+        
+    
 }

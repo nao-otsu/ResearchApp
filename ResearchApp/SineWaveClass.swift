@@ -18,6 +18,7 @@ class SineWaveClass{
 
     //周波数
     var frequency: Float = 0.0
+    private var count: Int = 0
     
     init(){
         audioEngine = AVAudioEngine()
@@ -50,7 +51,7 @@ class SineWaveClass{
         //Sin波生成
         for ch in (0..<Int(mixerNode.outputFormat(forBus: 0).channelCount)){
             let samples = pcmBuffer.floatChannelData?[ch]
-            for n in 0..<Int(pcmBuffer.frameLength){
+            for n in count..<Int(pcmBuffer.frameLength){
                 samples?[n] = sinf(Float(2.0 * M_PI) * frequency * Float(n) / Float(audioFormat.sampleRate))
             }
         }
@@ -60,6 +61,7 @@ class SineWaveClass{
     
     func scheduleBuffer() {
         let buffer = prepareBuffer()
+        //playerNode.scheduleBuffer(buffer, at: nil, options: .interruptsAtLoop, completionHandler: nil)
         playerNode.scheduleBuffer(buffer, at: nil, options: .interruptsAtLoop, completionHandler: {
             if self.playerNode.isPlaying {
                 self.scheduleBuffer()
