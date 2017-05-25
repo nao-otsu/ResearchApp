@@ -9,19 +9,34 @@
 import UIKit
 import AVFoundation
 
-class AudioGeneratorViewController: UIViewController,EZMicrophoneDelegate,EZAudioFFTDelegate{
+class AudioGeneratorViewController: UIViewController,EZAudioFFTDelegate, EZMicrophoneDelegate{
     
     var sineWave: SineWaveClass!
     
     @IBOutlet weak var frequencySlider: UISlider!
     @IBOutlet weak var frequencyLabel: UILabel!
     @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var audioPlotTime: EZAudioPlot!
+    var fft: EZAudioFFTRolling!
+    var microphone: EZMicrophone!
+    
+    private let ViewControllerFFTWindowSize: vDSP_Length = 4096
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        audioPlotTime.plotType = EZPlotType.buffer
+        
+        microphone = EZMicrophone(delegate: self, startsImmediately: true)
+        fft = EZAudioFFTRolling(windowSize: ViewControllerFFTWindowSize, sampleRate: Float(microphone.audioStreamBasicDescription().mSampleRate), delegate: self)
+        
+        microphone.startFetchingAudio()
+        
         frequencyLabel.text = String(frequencySlider.value)
         sineWave = SineWaveClass()
         sineWave.frequency = frequencySlider.value
+        
+        
         
     }
 
@@ -53,6 +68,13 @@ class AudioGeneratorViewController: UIViewController,EZMicrophoneDelegate,EZAudi
         }
     }
     
+    func microphone(_ microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>?>!, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
+
+        DispatchQueue.main.async {
+            self.audioPlotTime.updateBuffer(buffer[0], withBufferSize: bufferSize)
+        }
+
+    }
         
     
 }

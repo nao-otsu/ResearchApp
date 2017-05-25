@@ -180,10 +180,22 @@
                         <viewControllerLayoutGuide type="top" id="b79-Pv-Db8"/>
                         <viewControllerLayoutGuide type="bottom" id="y6k-6q-dL6"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="T5C-E9-2ch" userLabel="View" customClass="ADBannerView">
+                    <view key="view" contentMode="scaleToFill" id="T5C-E9-2ch" userLabel="View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EYH-78-w3r" customClass="EZAudioPlot">
+                                <rect key="frame" x="0.0" y="20" width="375" height="150"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="oF5-K2-0Wu"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1000" minValue="0.0" maxValue="20000" translatesAutoresizingMaskIntoConstraints="NO" id="9uE-8w-1uW">
                                 <rect key="frame" x="18" y="319" width="339" height="31"/>
                                 <connections>
@@ -209,12 +221,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="9uE-8w-1uW" secondAttribute="trailing" constant="20" id="7Ya-P7-XAW"/>
+                            <constraint firstItem="EYH-78-w3r" firstAttribute="top" secondItem="b79-Pv-Db8" secondAttribute="bottom" id="9Nb-Zd-S9N"/>
                             <constraint firstItem="9uE-8w-1uW" firstAttribute="centerX" secondItem="T5C-E9-2ch" secondAttribute="centerX" id="9Pp-DO-dbv"/>
                             <constraint firstItem="9uE-8w-1uW" firstAttribute="leading" secondItem="T5C-E9-2ch" secondAttribute="leading" constant="20" id="AC5-go-V0w"/>
+                            <constraint firstAttribute="trailing" secondItem="EYH-78-w3r" secondAttribute="trailing" id="TBA-bu-hL5"/>
                             <constraint firstItem="9uE-8w-1uW" firstAttribute="centerY" secondItem="T5C-E9-2ch" secondAttribute="centerY" id="pAp-de-J81"/>
+                            <constraint firstItem="EYH-78-w3r" firstAttribute="leading" secondItem="T5C-E9-2ch" secondAttribute="leading" id="vfq-xn-I8R"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="audioPlotTime" destination="EYH-78-w3r" id="5a9-49-xe0"/>
                         <outlet property="frequencyLabel" destination="pHC-0m-u7Q" id="Rlm-8m-qSG"/>
                         <outlet property="frequencySlider" destination="9uE-8w-1uW" id="EQR-qT-dF1"/>
                         <outlet property="playButton" destination="pMV-8g-Ksd" id="aGU-t0-ntg"/>

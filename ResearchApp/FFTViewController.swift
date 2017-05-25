@@ -51,7 +51,7 @@ class FFTViewController: UIViewController,EZAudioFFTDelegate,EZMicrophoneDelegat
     func fft(_ fft: EZAudioFFT!, updatedWithFFTData fftData: UnsafeMutablePointer<Float>!, bufferSize: vDSP_Length) {
         
         let maxFrequency: Float = fft.maxFrequency
-        print(maxFrequency)
+        //print(maxFrequency)
         DispatchQueue.main.async {
             self.maxFrequencyLabel.text = "Frequency:" + String(maxFrequency) + "Hz"
             self.audioPlot.updateBuffer(fftData, withBufferSize: UInt32(bufferSize))
