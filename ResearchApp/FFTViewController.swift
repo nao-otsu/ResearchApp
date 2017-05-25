@@ -12,6 +12,8 @@ class FFTViewController: UIViewController,EZAudioFFTDelegate,EZMicrophoneDelegat
     
     var fft: EZAudioFFTRolling!
     var microphone: EZMicrophone!
+    @IBOutlet var audioPlot: EZAudioPlot!
+    @IBOutlet weak var maxFrequencyLabel: UILabel!
     
     private let ViewControllerFFTWindowSize: vDSP_Length = 4096
 
@@ -30,7 +32,11 @@ class FFTViewController: UIViewController,EZAudioFFTDelegate,EZMicrophoneDelegat
         fft = EZAudioFFTRolling(windowSize: ViewControllerFFTWindowSize, sampleRate: Float(microphone.audioStreamBasicDescription().mSampleRate), delegate: self)
         
         microphone.startFetchingAudio()
-
+        
+        audioPlot.shouldFill = true
+        audioPlot.plotType = EZPlotType.buffer
+        audioPlot.shouldCenterYAxis =  false
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,8 +49,12 @@ class FFTViewController: UIViewController,EZAudioFFTDelegate,EZMicrophoneDelegat
     }
     
     func fft(_ fft: EZAudioFFT!, updatedWithFFTData fftData: UnsafeMutablePointer<Float>!, bufferSize: vDSP_Length) {
-        for i in 0...Int(bufferSize) {
-            print(fftData[i])
+        
+        let maxFrequency: Float = fft.maxFrequency
+        print(maxFrequency)
+        DispatchQueue.main.async {
+            self.maxFrequencyLabel.text = "Frequency:" + String(maxFrequency) + "Hz"
+            self.audioPlot.updateBuffer(fftData, withBufferSize: UInt32(bufferSize))
         }
     }
 

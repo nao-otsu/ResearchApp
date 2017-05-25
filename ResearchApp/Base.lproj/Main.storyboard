@@ -64,7 +64,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u2v-ld-tDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-510" y="45"/>
+            <point key="canvasLocation" x="-591" y="45"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -229,18 +229,42 @@
             <objects>
                 <viewController id="1Cg-hP-DUu" customClass="FFTViewController" customModule="ResearchApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="gFB-pJ-qu8"/>
-                        <viewControllerLayoutGuide type="bottom" id="Oqo-Sn-7Kt"/>
+                        <viewControllerLayoutGuide type="top" id="QyB-aE-94N"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vfx-a9-kBl"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ajA-Dr-LNd">
+                    <view key="view" contentMode="scaleToFill" id="sMg-zV-dWj" customClass="EZAudioPlot">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MaxFreqency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlr-Ci-HE7">
+                                <rect key="frame" x="10" y="40" width="104" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Xlr-Ci-HE7" firstAttribute="top" secondItem="QyB-aE-94N" secondAttribute="bottom" constant="20" id="YBP-kD-wRD"/>
+                            <constraint firstItem="Xlr-Ci-HE7" firstAttribute="leading" secondItem="sMg-zV-dWj" secondAttribute="leading" constant="10" id="dkT-Dr-1WQ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                <color key="value" red="0.3540813216" green="0.95278499949999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="audioPlot" destination="sMg-zV-dWj" id="GHY-4W-rTR"/>
+                        <outlet property="maxFrequencyLabel" destination="Xlr-Ci-HE7" id="Sh2-c4-2gd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Khc-Q7-pbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="270" y="815"/>
+            <point key="canvasLocation" x="269.60000000000002" y="814.54272863568224"/>
         </scene>
     </scenes>
 </document>
