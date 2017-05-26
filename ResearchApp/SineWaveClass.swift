@@ -16,6 +16,8 @@ class SineWaveClass{
     var pcmBuffer: AVAudioPCMBuffer!
     var audioFormat: AVAudioFormat!
 
+    //サンプルレート
+    let sampleRate: Float = 44100.0
     //周波数
     var frequency: Float = 0.0
     private var count: Int = 0
@@ -24,7 +26,6 @@ class SineWaveClass{
         audioEngine = AVAudioEngine()
         playerNode = AVAudioPlayerNode()
         audioFormat = playerNode.outputFormat(forBus: 0)
-        let sampleRate = audioFormat.sampleRate
         let length = sampleRate
         pcmBuffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: UInt32(sampleRate))
         pcmBuffer.frameLength = UInt32(length)
@@ -38,23 +39,19 @@ class SineWaveClass{
         }
     }
     
-    /*func prepareBuffer() -> AVAudioPCMBuffer{
-        let buffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: bufferCapacity)
-        fillBuffer(buffer: buffer)
-        return buffer
-    }*/
-    
     func prepareBuffer() -> AVAudioPCMBuffer{
         
         //print(channels)
         
         //Sin波生成
-        for ch in (0..<Int(mixerNode.outputFormat(forBus: 0).channelCount)){
-            let samples = pcmBuffer.floatChannelData?[ch]
-            for n in count..<Int(pcmBuffer.frameLength){
+        print(Int(mixerNode.outputFormat(forBus: 0).channelCount))
+        //for ch in (0..<Int(mixerNode.outputFormat(forBus: 0).channelCount)){
+            let samples = pcmBuffer.floatChannelData?[0]
+            for n in count..<Int(pcmBuffer.frameCapacity){
                 samples?[n] = sinf(Float(2.0 * M_PI) * frequency * Float(n) / Float(audioFormat.sampleRate))
-            }
+        //    }
         }
+        pcmBuffer.frameLength = pcmBuffer.frameCapacity
         
         return pcmBuffer
     }

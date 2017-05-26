@@ -17,6 +17,7 @@ class AudioGeneratorViewController: UIViewController,EZAudioFFTDelegate, EZMicro
     @IBOutlet weak var frequencyLabel: UILabel!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var audioPlotTime: EZAudioPlot!
+    @IBOutlet weak var audioPlotFrequency: EZAudioPlot!
     var fft: EZAudioFFTRolling!
     var microphone: EZMicrophone!
     
@@ -25,7 +26,16 @@ class AudioGeneratorViewController: UIViewController,EZAudioFFTDelegate, EZMicro
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //時間
         audioPlotTime.plotType = EZPlotType.buffer
+        
+        //周波数
+        audioPlotFrequency.plotType = EZPlotType.buffer
+        audioPlotFrequency.shouldFill = true
+        //audioPlotFrequency.shouldMirror = false
+        //audioPlotFrequency.shouldOptimizeForRealtimePlot = false
+        audioPlotFrequency.shouldCenterYAxis = true
+        
         
         microphone = EZMicrophone(delegate: self, startsImmediately: true)
         fft = EZAudioFFTRolling(windowSize: ViewControllerFFTWindowSize, sampleRate: Float(microphone.audioStreamBasicDescription().mSampleRate), delegate: self)
@@ -69,11 +79,17 @@ class AudioGeneratorViewController: UIViewController,EZAudioFFTDelegate, EZMicro
     }
     
     func microphone(_ microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>?>!, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
-
+        fft.computeFFT(withBuffer: buffer[0], withBufferSize: bufferSize)
         DispatchQueue.main.async {
             self.audioPlotTime.updateBuffer(buffer[0], withBufferSize: bufferSize)
         }
 
+    }
+    
+    func fft(_ fft: EZAudioFFT!, updatedWithFFTData fftData: UnsafeMutablePointer<Float>!, bufferSize: vDSP_Length) {
+        DispatchQueue.main.async {
+            self.audioPlotFrequency.updateBuffer(fftData, withBufferSize: UInt32(bufferSize))
+        }
     }
         
     
