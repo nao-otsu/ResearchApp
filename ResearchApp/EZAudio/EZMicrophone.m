@@ -214,8 +214,11 @@ static OSStatus EZAudioMicrophoneCallback(void                       *inRefCon,
     inputComponentDescription.componentManufacturer = kAudioUnitManufacturer_Apple;
 #if TARGET_OS_IPHONE
     inputComponentDescription.componentSubType = kAudioUnitSubType_RemoteIO;
-#elif TARGET_OS_MAC
+    //inputComponentDescription.componentSubType = kAudioUnitSubType_VoiceProcessingIO;
+    //inputComponentDescription.componentSubType = kAudioUnitSubType_GenericOutput;
+#elif TARGET_OS_MAC_
     inputComponentDescription.componentSubType = kAudioUnitSubType_HALOutput;
+    //inputComponentDescription.componentSubType = kAudioUnitSubType_VoiceProcessingIO;
 #endif
     // The following must be set to zero unless a specific value is requested.
     inputComponentDescription.componentFlags = 0;

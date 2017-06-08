@@ -9,13 +9,14 @@
 import Foundation
 import AVFoundation
 
+
 class SineWaveClass{
     var audioEngine: AVAudioEngine!
     var playerNode: AVAudioPlayerNode!
     var mixerNode: AVAudioMixerNode!
     var pcmBuffer: AVAudioPCMBuffer!
     var audioFormat: AVAudioFormat!
-
+    
     //サンプルレート
     let sampleRate: Float = 44100.0
     //周波数
@@ -44,12 +45,12 @@ class SineWaveClass{
         //print(channels)
         
         //Sin波生成
-        print(Int(mixerNode.outputFormat(forBus: 0).channelCount))
+        //print(Int(mixerNode.outputFormat(forBus: 0).channelCount))
         //for ch in (0..<Int(mixerNode.outputFormat(forBus: 0).channelCount)){
-            let samples = pcmBuffer.floatChannelData?[0]
-            for n in count..<Int(pcmBuffer.frameCapacity){
-                samples?[n] = sinf(Float(2.0 * M_PI) * frequency * Float(n) / Float(audioFormat.sampleRate))
-        //    }
+        let samples = pcmBuffer.floatChannelData?[0]
+        for n in count..<Int(pcmBuffer.frameCapacity){
+            samples?[n] = sinf(Float(2.0 * M_PI) * frequency * Float(n) / Float(audioFormat.sampleRate))
+            //    }
         }
         pcmBuffer.frameLength = pcmBuffer.frameCapacity
         
@@ -66,6 +67,7 @@ class SineWaveClass{
         })
     }
     
+    
     func preparePlaying() {
         scheduleBuffer()
         scheduleBuffer()
@@ -73,4 +75,5 @@ class SineWaveClass{
         scheduleBuffer()
     }
 }
+
 

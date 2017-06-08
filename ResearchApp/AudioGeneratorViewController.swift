@@ -10,12 +10,13 @@ import UIKit
 import AVFoundation
 
 class AudioGeneratorViewController: UIViewController,EZAudioFFTDelegate, EZMicrophoneDelegate{
-    
+
     var sineWave: SineWaveClass!
     
     @IBOutlet weak var frequencySlider: UISlider!
     @IBOutlet weak var frequencyLabel: UILabel!
     @IBOutlet weak var playButton: UIButton!
+    
     @IBOutlet weak var audioPlotTime: EZAudioPlot!
     @IBOutlet weak var audioPlotFrequency: EZAudioPlot!
     var fft: EZAudioFFTRolling!
@@ -25,6 +26,19 @@ class AudioGeneratorViewController: UIViewController,EZAudioFFTDelegate, EZMicro
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let session = AVAudioSession.sharedInstance()
+        do {
+            //下のスピーカーを使ったまま再生録音可能
+            try session.setCategory(AVAudioSessionCategoryPlayAndRecord, with:AVAudioSessionCategoryOptions.defaultToSpeaker)
+            //スピーカー上
+            //try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            //スピーカー下
+            //try session.setCategory(AVAudioSessionCategoryAmbient)
+            try session.setActive(true)
+        }catch let error {
+            print(error)
+        }
         
         //時間
         audioPlotTime.plotType = EZPlotType.buffer
@@ -46,10 +60,20 @@ class AudioGeneratorViewController: UIViewController,EZAudioFFTDelegate, EZMicro
         sineWave = SineWaveClass()
         sineWave.frequency = frequencySlider.value
         
-        
-        
-    }
 
+    }
+    
+    /*override func viewWillAppear(_ animated: Bool) {
+        microphone = EZMicrophone(delegate: self, startsImmediately: true)
+        fft = EZAudioFFTRolling(windowSize: ViewControllerFFTWindowSize, sampleRate: Float(microphone.audioStreamBasicDescription().mSampleRate), delegate: self)
+        
+        microphone.startFetchingAudio()
+        
+        frequencyLabel.text = String(frequencySlider.value)
+        sineWave = SineWaveClass()
+        sineWave.frequency = frequencySlider.value
+    }*/
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -64,17 +88,15 @@ class AudioGeneratorViewController: UIViewController,EZAudioFFTDelegate, EZMicro
     }
 
     @IBAction func PlayButton(_ sender: UIButton) {
-        if sender.titleLabel?.text == "Play" {
+        if sineWave.playerNode.isPlaying{
+            sineWave.playerNode.stop()
+            playButton.setTitle("Play", for: .normal)
+        }else{
             //sineWaveのインスタンス化 1つ目
-            playButton.setTitle("Stop", for: .normal)
             sineWave.preparePlaying()
             sineWave.playerNode.play()
             //sineWave.preparePlaying()
-        }else if sender.titleLabel?.text == "Stop"{
-            playButton.setTitle("Play", for: .normal)
-            if sineWave.playerNode.isPlaying{
-                sineWave.playerNode.stop()
-            }
+            playButton.setTitle("Stop", for: .normal)
         }
     }
     
@@ -88,9 +110,12 @@ class AudioGeneratorViewController: UIViewController,EZAudioFFTDelegate, EZMicro
     
     func fft(_ fft: EZAudioFFT!, updatedWithFFTData fftData: UnsafeMutablePointer<Float>!, bufferSize: vDSP_Length) {
         DispatchQueue.main.async {
+            //print(fft)
             self.audioPlotFrequency.updateBuffer(fftData, withBufferSize: UInt32(bufferSize))
         }
     }
-        
     
+    func htons(value: CUnsignedShort) -> CUnsignedShort {
+        return (value << 8) + (value >> 8);
+    }
 }
